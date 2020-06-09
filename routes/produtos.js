@@ -34,8 +34,7 @@ router.post('/', (req, res, next) => {
                 if (error) {return res.status(500).send({error: error, response: null})};
 
                 res.status(201).send({
-                    mensagem: 'Produto Inserido com Sucesso',
-                    id_produto: resultado.insertId
+                    mensagem: 'Produto Inserido com Sucesso'
                 })
             }
         )
@@ -68,8 +67,8 @@ router.patch('/', (req, res, next) => {
         if (error) {return res.status(500).send({error: error})};
         conn.query(
             `UPDATE produtos
-                SET nome       = ?,
-                    preco      = ?
+                SET nome        = ?,
+                    preco       = ?
               WHERE id_produtos = ?`,
             
             [
