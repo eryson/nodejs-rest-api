@@ -7,6 +7,7 @@ const rotaProdutos = require('./routes/produtos');
 const rotaPedidos = require('./routes/pedidos');
 
 app.use(morgan('dev'));
+app.use('/uploads', express.static('uploads')); // DEIXA O ARQUIVO PUBLICO
 app.use(bodyParser.urlencoded({extended: false})); // ACEITAR APENAS DADOS SIMPLES
 app.use(bodyParser.json()); // ACEITAR APENAS FORMATO JSON NO BODY
 
