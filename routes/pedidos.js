@@ -7,19 +7,31 @@ router.get('/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {return res.status(500).send({error: error})};
         conn.query(
-            'SELECT * FROM pedidos',
-            (error, resultado, field) => {
+            `SELECT
+                pedidos.id_pedidos,
+                pedidos.quantidade,
+                produtos.id_produtos,
+                produtos.nome,
+                produtos.preco
+             FROM
+                pedidos
+                INNER JOIN produtos ON produtos.id_produtos = pedidos.produtos_id_produtos`,
+            (error, result, field) => {
                 conn.release();
 
                 if (error) {return res.status(500).send({error: error, response: null})};
 
                 const response = {
-                    quantidade: result.length,
                     pedidos: result.map(pedido => {
                         return {
                             id_pedido: pedido.id_pedidos,
-                            id_produto: prod.id_produtos,
                             quantidade: pedido.quantidade,
+                            produto: {
+                                id_produto: pedido.id_produtos,
+                                nome: pedido.nome,
+                                preco: pedido.preco
+                            },
+                            
                             request: {
                                 tipo: 'GET',
                                 decricao: 'Retorna um pedido específico',
@@ -37,13 +49,11 @@ router.get('/', (req, res, next) => {
 
 // INSERE UM PEDIDO
 router.post('/', (req, res, next) => {
-
     mysql.getConnection((error, conn) => {
         if (error) {return res.status(500).send({error: error})};
         conn.query('SELECT * FROM produtos WHERE id_produtos = ?', 
-        [req.body.id_produtos], 
-        (error, result, field) => {
-            
+        [req.body.id_produto], 
+        (error, result, field) => {            
             if (error) {return res.status(500).send({error: error})};
             if (result.length == 0) {
                 return res.status(404).send({

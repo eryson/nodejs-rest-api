@@ -109,10 +109,13 @@ router.patch('/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {return res.status(500).send({error: error})};
         conn.query(
-            `UPDATE produtos
-                SET nome        = ?,
-                    preco       = ?
-              WHERE id_produtos = ?`,
+            `UPDATE
+                produtos
+             SET
+                nome  = ?,
+                preco = ?
+             WHERE
+                id_produtos = ?`,
             
             [
                 req.body.nome, 
