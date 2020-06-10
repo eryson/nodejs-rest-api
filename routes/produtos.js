@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
                             preco: prod.preco,
                             request: {
                                 tipo: 'GET',
-                                decricao: 'Retorna todos os produtos',
+                                decricao: 'Retorna um produto específico',
                                 url: 'http://localhost:3000/produtos/' + prod.id_produtos
                             }
                         };
@@ -54,8 +54,8 @@ router.post('/', (req, res, next) => {
                         nome: req.body.nome,
                         preco: req.body.preco,
                         request: {
-                            tipo: 'POST',
-                            decricao: 'Insere um produto',
+                            tipo: 'GET',
+                            decricao: 'Retorna todos os produtos',
                             url: 'http://localhost:3000/produtos'
                         }
                     }
@@ -92,7 +92,7 @@ router.get('/:id_produto', (req, res, next) => {
                         preco: result[0].preco,
                         request: {
                             tipo: 'GET',
-                            decricao: 'Retorna um produto específico',
+                            decricao: 'Retorna todos os produtos',
                             url: 'http://localhost:3000/produtos'
                         }
                     }
